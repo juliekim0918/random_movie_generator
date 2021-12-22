@@ -1,0 +1,9 @@
+* {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  font-family: "Cabin";
+}
+
+h1 {
+  font-family: "Limelight";
+}
