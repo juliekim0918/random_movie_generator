@@ -34,11 +34,13 @@ app.put("/:id", async (req, res, next) => {
   } catch (error) {
     // next(error);
     if (error.name === "SequelizeValidationError") {
-      return res.status(404).json({
+      console.log(error.errors.map((e) => e.validatorKey));
+      return res.status(400).json({
         msg: error.errors.map((e) => e.message),
+        key: error.errors.map((e) => e.validatorKey),
       });
     } else {
-      next(new ErrorResponse(`Sorry, couldnt update rating`, 404));
+      next(new ErrorResponse(`Sorry, couldnt update rating`, 400));
     }
   }
 });

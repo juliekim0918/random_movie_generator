@@ -9,43 +9,17 @@ import {
 const DECREMENT = "DECREMENT";
 const INCREMENT = "INCREMENT";
 import ErrorMsg from "./ErrorMsg";
-import { X, Star, ChevronUp, ChevronDown } from "react-feather";
+import { X, Star, ChevronUp, ChevronDown, AlertCircle } from "react-feather";
 
 class App extends Component {
   constructor() {
     super();
-    this.state = {
-      err: {
-        errMsg: "",
-        id: 0,
-      },
-    };
   }
   componentDidMount() {
     this.props.fetchMovies();
-    this.setState({
-      err: {
-        errMsg: this.props.err.errMsg,
-        id: this.props.err.id,
-      },
-    });
   }
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.err !== this.props.err) {
-      console.log("a change in the error state occurred!!!");
-
-      this.setState({
-        err: {
-          errMsg: this.props.err.errMsg,
-          id: this.props.err.id,
-        },
-      });
-    }
-  }
-
   render() {
     const movies = this.props.movies || [];
-    const { err } = this.state;
     const { generateMovie, deleteMovie, updateRating } = this.props;
     return (
       <div className="container m-auto my-10 md:w-10/12 shadow-lg rounded-md p-10 bg-sky-200">
@@ -70,7 +44,7 @@ class App extends Component {
                 key={movie.id}
                 className=" bg-white rounded-md flex flex-col justify-center p-8 border-l-8 border-sky-700"
               >
-                <div className="flex justify-between">
+                <div className="flex justify-between space-x-3">
                   <h1 className="font-serif text-3xl">{movie.title}</h1>
                   <button
                     onClick={() => deleteMovie(movie.id)}
@@ -79,6 +53,7 @@ class App extends Component {
                     <X size={15} />
                   </button>
                 </div>
+                <ErrorMsg movie={movie} />
                 <div className="my-2 text-xl flex gap-2 items-center space-x-3">
                   <div className="flex flex-row gap-2 items-center">
                     <Star fill="#e9c46a" stroke="#e9c46a" />
@@ -91,11 +66,7 @@ class App extends Component {
                     >
                       <ChevronUp size={15} />
                     </button>
-                    {err.errMsg && movie.id === err.id ? (
-                      <ErrorMsg msg={err.errMsg} />
-                    ) : (
-                      ""
-                    )}
+
                     <button
                       onClick={() => updateRating(movie, DECREMENT)}
                       className="bg-light-grey rounded-md max-w-max p-2  h-fit"

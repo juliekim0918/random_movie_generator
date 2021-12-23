@@ -58,9 +58,10 @@ export const updateRating = (movie, operator) => {
       dispatch(_fetchAllMovies(movies));
       dispatch(resetError());
     } catch (error) {
+      const errValidatorKey = error.response.data.key[0];
       const errMsg = error.response.data.msg[0];
       const movieId = movie.id;
-      dispatch(catchError(errMsg, movieId));
+      dispatch(catchError(errValidatorKey, errMsg, movieId));
     }
   };
 };
