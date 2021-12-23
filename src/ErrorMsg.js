@@ -8,7 +8,6 @@ class ErrorMsg extends Component {
     this.state = {
       err: {
         errKey: "",
-        errMsg: "",
         id: 0,
       },
     };
@@ -18,7 +17,6 @@ class ErrorMsg extends Component {
     this.setState({
       err: {
         errKey: this.props.err.errKey,
-        errMsg: this.props.err.errMsg,
         id: this.props.err.id,
       },
     });
@@ -28,7 +26,6 @@ class ErrorMsg extends Component {
       this.setState({
         err: {
           errKey: this.props.err.errKey,
-          errMsg: this.props.err.errMsg,
           id: this.props.err.id,
         },
       });
@@ -37,15 +34,15 @@ class ErrorMsg extends Component {
 
   render() {
     const { movie, err } = this.props;
-    const { errKey, errMsg } = err;
+    const { errKey } = err;
     return (
       <div>
-        {err.errMsg && movie.id === err.id ? (
+        {errKey && movie.id === err.id ? (
           <div className="flex px-3 my-2 py-2 space-x-2 rounded-md bg-red-300 w-fit">
             <AlertCircle />
             <div>
               {errKey === "max"
-                ? "Oh no, you rating can't go above that!"
+                ? "Oh no, your rating can't go above that!"
                 : "Oh no, your rating can't go below that!"}
             </div>
           </div>

@@ -59,9 +59,8 @@ export const updateRating = (movie, operator) => {
       dispatch(resetError());
     } catch (error) {
       const errValidatorKey = error.response.data.key[0];
-      const errMsg = error.response.data.msg[0];
       const movieId = movie.id;
-      dispatch(catchError(errValidatorKey, errMsg, movieId));
+      dispatch(catchError(errValidatorKey, movieId));
     }
   };
 };
@@ -72,7 +71,7 @@ export default (state = [], action) => {
       return action.movies;
     case GENERATE_MOVIE:
       state = [...state];
-      state.push(action.movie);
+      state.unshift(action.movie);
       return state;
 
     default:
