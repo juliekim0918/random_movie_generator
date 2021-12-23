@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const path = require("path");
-const { db } = require("./db/main");
+const { db, syncAndSeed } = require("./db/main");
 const PORT = process.env.PORT || 3000;
 const volleyball = require("volleyball");
 
@@ -20,6 +20,7 @@ app.get("/", (req, res, next) => {
 const init = async () => {
   try {
     await db.sync({ force: true });
+    await syncAndSeed();
     app.listen(PORT, () =>
       console.log(`
 

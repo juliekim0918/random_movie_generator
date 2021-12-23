@@ -7,10 +7,39 @@ const { response } = require("..");
 //GET /api/movies
 app.get("/", async (req, res, next) => {
   try {
-    const movies = await Movie.findAll();
+    const movies = await Movie.findAll({
+      order: [["createdAt", "DESC"]],
+    });
     res.send(movies);
   } catch (error) {
     next(error);
+  }
+});
+
+//GET /api/movies/:id
+app.get("/:id", async (req, res, next) => {
+  try {
+    const movie = await Movie.findByPk(req.params.id);
+    res.send(movie);
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.put("/:id", async (req, res, next) => {
+  try {
+    const movie = await Movie.findByPk(req.params.id);
+    await movie.update(req.body);
+    res.send(movie);
+  } catch (error) {
+    // next(error);
+    if (error.name === "SequelizeValidationError") {
+      return res.status(404).json({
+        msg: error.errors.map((e) => e.message),
+      });
+    } else {
+      next(new ErrorResponse(`Sorry, couldnt update rating`, 404));
+    }
   }
 });
 
@@ -18,7 +47,7 @@ app.get("/", async (req, res, next) => {
 app.post("/", async (req, res, next) => {
   try {
     const newMovie = await Movie.create({
-      title: faker.commerce.catchPhrase(),
+      title: faker.company.catchPhrase(),
     });
     res.send(newMovie);
   } catch (error) {

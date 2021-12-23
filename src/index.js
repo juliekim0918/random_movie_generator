@@ -4,6 +4,7 @@ const root = document.querySelector("#root");
 import App from "./App";
 import { Provider } from "react-redux";
 import store from "./store";
+import "./input.css";
 
 render(
   <Provider store={store}>

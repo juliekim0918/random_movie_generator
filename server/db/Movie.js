@@ -10,6 +10,10 @@ const Movie = db.define("movie", {
   rating: {
     type: INTEGER,
     defaultValue: 3,
+    validate: {
+      max: 5,
+      min: 1,
+    },
   },
 });
 
