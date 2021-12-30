@@ -7,7 +7,7 @@
     "test": "mocha tests/*spec.js",
     "test:dev": "npm test -- --watch",
     "start:dev": "npm run start-server & npm run build-watch",
-    "start": "npm run server",
+    "start": "node src/index.js",
     "start-server": "nodemon --watch server -e js,html server",
     "build-watch": "webpack -w"
   },
